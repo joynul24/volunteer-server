@@ -35,13 +35,18 @@ async function run() {
     
     
     const volunteerCollection = client.db("volunteerHubDB").collection('volunteers');
+    
 
+
+    // save a volunteer post API
     app.post('/addVolunteer', async(req, res)=> {
         const newVolunteer = req.body;
         const result = await volunteerCollection.insertOne(newVolunteer)
         res.send(result)
     })
+
     
+
 } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
