@@ -90,6 +90,30 @@ app.get("/posts", async (req, res) => {
   }
 });
 
+
+
+app.get("/posts/my-posts", async (req, res) => {
+  try {
+    const db = await connectDB();
+    const posts = db.collection("posts");
+
+    const email = req.query.email;
+
+    if (!email) {
+      return res.status(400).send({ error: "Email required" });
+    }
+
+    const result = await posts
+      .find({ organizerEmail: email })
+      .toArray();
+
+    res.send(result);
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+
 // GET SINGLE POST
 app.get("/posts/:id", async (req, res) => {
   try {
